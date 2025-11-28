@@ -1,0 +1,34 @@
+{
+  "timestamp": "2025-11-15T15:55:19.142Z",
+  "baseUrl": "https://sajuwooju-enterprise-mpyih11cm-kevinglecs-projects.vercel.app",
+  "summary": {
+    "totalPages": 0,
+    "hardcodingIssues": 0,
+    "criticalIssues": 0,
+    "apiEndpoints": 0,
+    "performancePages": 2
+  },
+  "pages": [],
+  "hardcodingIssues": [],
+  "apiEndpoints": [],
+  "performance": [
+    {
+      "url": "https://sajuwooju-enterprise-mpyih11cm-kevinglecs-projects.vercel.app",
+      "fcp": 0,
+      "lcp": 500,
+      "cls": 0,
+      "domContentLoaded": 0,
+      "loadComplete": 0,
+      "ttfb": 5.5999999940395355
+    },
+    {
+      "url": "https://sajuwooju-enterprise-mpyih11cm-kevinglecs-projects.vercel.app/dashboard",
+      "fcp": 0,
+      "lcp": 500,
+      "cls": 0,
+      "domContentLoaded": 0.09999999403953552,
+      "loadComplete": 0,
+      "ttfb": 5.5999999940395355
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+OG Image Placeholder
+
+This file marks the location where og-image.jpg should be placed.
+
+Specifications for OG Image:
+- Dimensions: 1200x630 pixels
+- Format: JPG or PNG
+- Content: Branding elements + project title
+- Should include: Logo, text, and visual elements
+- Used for: Open Graph meta tags for social sharing
+
+Instructions to create the OG image:
+1. Use a design tool (Figma, Photoshop, or online generator)
+2. Create a 1200x630px image
+3. Add your branding and project title
+4. Save as "og-image.jpg" in this directory (public/)
+5. Update layout.tsx to reference the image in openGraph metadata
+
+Reference for usage in layout.tsx:
+export const metadata = {
+  openGraph: {
+    title: 'Project Title',
+    description: 'Project Description',
+    images: ['/og-image.jpg'],
+    type: 'website',
+  },
+};

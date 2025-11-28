@@ -1,0 +1,274 @@
+
+> sajuwooju-v2@1.0.0 build
+> next build
+
+   ▲ Next.js 16.0.2 (Turbopack)
+   - Environments: .env.local, .env
+
+ ⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 19.3s
+   Running TypeScript ...
+   Collecting page data ...
+prisma:warn In production, we recommend using `prisma generate --no-engine` (See: `prisma generate --help`)
+prisma:warn In production, we recommend using `prisma generate --no-engine` (See: `prisma generate --help`)
+prisma:warn In production, we recommend using `prisma generate --no-engine` (See: `prisma generate --help`)
+prisma:warn In production, we recommend using `prisma generate --no-engine` (See: `prisma generate --help`)
+prisma:warn In production, we recommend using `prisma generate --no-engine` (See: `prisma generate --help`)
+prisma:warn In production, we recommend using `prisma generate --no-engine` (See: `prisma generate --help`)
+prisma:warn In production, we recommend using `prisma generate --no-engine` (See: `prisma generate --help`)
+prisma:warn In production, we recommend using `prisma generate --no-engine` (See: `prisma generate --help`)
+prisma:warn In production, we recommend using `prisma generate --no-engine` (See: `prisma generate --help`)
+prisma:warn In production, we recommend using `prisma generate --no-engine` (See: `prisma generate --help`)
+prisma:warn In production, we recommend using `prisma generate --no-engine` (See: `prisma generate --help`)
+prisma:warn In production, we recommend using `prisma generate --no-engine` (See: `prisma generate --help`)
+prisma:warn In production, we recommend using `prisma generate --no-engine` (See: `prisma generate --help`)
+prisma:warn In production, we recommend using `prisma generate --no-engine` (See: `prisma generate --help`)
+prisma:warn In production, we recommend using `prisma generate --no-engine` (See: `prisma generate --help`)
+ ⚠ Using edge runtime on a page currently disables static generation for that page
+Failed to generate static params: SyntaxError: Unexpected token '<', "<!doctype "... is not valid JSON
+    at JSON.parse (<anonymous>)
+    at async Object.k [as generateStaticParams] (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__cab5c099._.js:1:1353)
+   Generating static pages (0/85) ...
+Failed to fetch product from API: Error: Dynamic server usage: Route /products/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products/3 /products/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at v (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:19:3717)
+    at <unknown> (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:22:32206) {
+  description: "Route /products/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products/3 /products/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+prisma:warn In production, we recommend using `prisma generate --no-engine` (See: `prisma generate --help`)
+Failed to fetch products from API, using fallback data: Error: Dynamic server usage: Route /category/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products?category=event&limit=50 /category/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at v (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:19:3717)
+    at <unknown> (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:22:32206) {
+  description: "Route /category/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products?category=event&limit=50 /category/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Failed to fetch products from API, using fallback data: Error: Dynamic server usage: Route /category/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products?category=compatibility&limit=50 /category/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at v (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:19:3717)
+    at <unknown> (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:22:32206) {
+  description: "Route /category/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products?category=compatibility&limit=50 /category/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Failed to fetch product from API: Error: Dynamic server usage: Route /products/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products/5 /products/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at v (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:19:3717)
+    at <unknown> (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:22:32206) {
+  description: "Route /products/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products/5 /products/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Failed to fetch products from API, using fallback data: Error: Dynamic server usage: Route /category/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products?category=love&limit=50 /category/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at v (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:19:3717)
+    at <unknown> (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:22:32206) {
+  description: "Route /category/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products?category=love&limit=50 /category/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+   Generating static pages (21/85) 
+Failed to fetch product from API: Error: Dynamic server usage: Route /products/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products/4 /products/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at v (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:19:3717)
+    at <unknown> (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:22:32206) {
+  description: "Route /products/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products/4 /products/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Failed to fetch products from API, using fallback data: Error: Dynamic server usage: Route /category/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products?category=breakup-reunion&limit=50 /category/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at v (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:19:3717)
+    at <unknown> (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:22:32206) {
+  description: "Route /category/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products?category=breakup-reunion&limit=50 /category/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Failed to fetch products from API, using fallback data: Error: Dynamic server usage: Route /category/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products?category=marriage&limit=50 /category/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at v (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:19:3717)
+    at <unknown> (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:22:32206) {
+  description: "Route /category/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products?category=marriage&limit=50 /category/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Failed to fetch product from API: Error: Dynamic server usage: Route /products/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products/6 /products/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at v (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:19:3717)
+    at <unknown> (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:22:32206) {
+  description: "Route /products/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products/6 /products/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Failed to fetch products from API, using fallback data: Error: Dynamic server usage: Route /category/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products?category=career&limit=50 /category/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at v (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:19:3717)
+    at <unknown> (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:22:32206) {
+  description: "Route /category/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products?category=career&limit=50 /category/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Failed to fetch products from API, using fallback data: Error: Dynamic server usage: Route /category/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products?category=new-year&limit=50 /category/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at v (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:19:3717)
+    at <unknown> (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:22:32206) {
+  description: "Route /category/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products?category=new-year&limit=50 /category/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Failed to fetch product from API: Error: Dynamic server usage: Route /products/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products/7 /products/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at v (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:19:3717)
+    at <unknown> (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:22:32206) {
+  description: "Route /products/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products/7 /products/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Failed to fetch product from API: Error: Dynamic server usage: Route /products/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products/8 /products/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at v (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:19:3717)
+    at <unknown> (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:22:32206) {
+  description: "Route /products/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products/8 /products/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Failed to fetch products from API, using fallback data: Error: Dynamic server usage: Route /category/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products?category=monthly&limit=50 /category/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at v (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:19:3717)
+    at <unknown> (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:22:32206) {
+  description: "Route /category/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products?category=monthly&limit=50 /category/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Failed to fetch product from API: Error: Dynamic server usage: Route /products/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products/9 /products/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at v (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:19:3717)
+    at <unknown> (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:22:32206) {
+  description: "Route /products/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products/9 /products/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Failed to fetch product from API: Error: Dynamic server usage: Route /products/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products/10 /products/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at v (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:19:3717)
+    at <unknown> (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:22:32206) {
+  description: "Route /products/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products/10 /products/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+   Generating static pages (42/85) 
+Failed to fetch products from API, using fallback data: Error: Dynamic server usage: Route /category/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products?category=fortune-telling&limit=50 /category/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at v (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:19:3717)
+    at <unknown> (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:22:32206) {
+  description: "Route /category/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products?category=fortune-telling&limit=50 /category/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Failed to fetch products from API, using fallback data: Error: Dynamic server usage: Route /category/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products?category=employment&limit=50 /category/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at v (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:19:3717)
+    at <unknown> (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:22:32206) {
+  description: "Route /category/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products?category=employment&limit=50 /category/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+prisma:warn In production, we recommend using `prisma generate --no-engine` (See: `prisma generate --help`)
+Failed to fetch products from API, using fallback data: Error: Dynamic server usage: Route /category/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products?category=event&limit=50 /category/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at v (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:19:3717)
+    at <unknown> (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:22:32206) {
+  description: "Route /category/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products?category=event&limit=50 /category/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Failed to fetch product from API: Error: Dynamic server usage: Route /products/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products/11 /products/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at v (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:19:3717)
+    at <unknown> (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:22:32206) {
+  description: "Route /products/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products/11 /products/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Failed to fetch product from API: Error: Dynamic server usage: Route /products/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products/12 /products/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at v (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:19:3717)
+    at <unknown> (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:22:32206) {
+  description: "Route /products/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products/12 /products/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+   Generating static pages (63/85) 
+Failed to fetch product from API: Error: Dynamic server usage: Route /products/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products/1 /products/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at v (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:19:3717)
+    at <unknown> (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:22:32206) {
+  description: "Route /products/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products/1 /products/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+Failed to fetch product from API: Error: Dynamic server usage: Route /products/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products/2 /products/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error
+    at v (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:19:3717)
+    at <unknown> (D:\saju\sajuwooju-enterprise\.next\server\chunks\ssr\[root-of-the-server]__78346915._.js:22:32206) {
+  description: "Route /products/[id] couldn't be rendered statically because it used revalidate: 0 fetch http://localhost:3000/api/products/2 /products/[id]. See more info here: https://nextjs.org/docs/messages/dynamic-server-error",
+  digest: 'DYNAMIC_SERVER_USAGE'
+}
+ ✓ Generating static pages (85/85) in 1938.8ms
+   Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /admin
+├ ○ /admin/analyses
+├ ○ /admin/categories
+├ ƒ /admin/categories/[id]
+├ ○ /admin/categories/new
+├ ○ /admin/dashboard
+├ ○ /admin/products
+├ ƒ /admin/products/[id]
+├ ○ /admin/products/new
+├ ○ /admin/users
+├ ƒ /api/admin/analyses
+├ ƒ /api/admin/analyses/[id]
+├ ƒ /api/admin/auth/login
+├ ƒ /api/admin/auth/logout
+├ ƒ /api/admin/auth/me
+├ ƒ /api/admin/categories
+├ ƒ /api/admin/categories/[id]
+├ ƒ /api/admin/products
+├ ƒ /api/admin/products/[id]
+├ ƒ /api/admin/stats/analyses
+├ ƒ /api/admin/stats/overview
+├ ƒ /api/admin/stats/products
+├ ƒ /api/admin/stats/users
+├ ƒ /api/admin/users
+├ ƒ /api/admin/users/[id]
+├ ƒ /api/ai/analyze
+├ ƒ /api/auth/[...nextauth]
+├ ƒ /api/calculate-saju
+├ ƒ /api/categories
+├ ƒ /api/consultations
+├ ƒ /api/consultations/[id]
+├ ƒ /api/follow
+├ ƒ /api/follow/[userId]
+├ ƒ /api/follow/[userId]/status
+├ ƒ /api/follow/followers
+├ ƒ /api/follow/following
+├ ƒ /api/follow/status
+├ ƒ /api/friends
+├ ƒ /api/friends/[requestId]/accept
+├ ƒ /api/friends/[requestId]/reject
+├ ƒ /api/friends/[userId]
+├ ƒ /api/friends/request
+├ ƒ /api/friends/requests
+├ ƒ /api/health
+├ ƒ /api/notifications
+├ ƒ /api/notifications/[id]
+├ ƒ /api/payments/confirm
+├ ƒ /api/payments/create
+├ ƒ /api/planets
+├ ƒ /api/products
+├ ƒ /api/products/[id]
+├ ƒ /api/rankings
+├ ƒ /api/saju/analyses
+├ ƒ /api/saju/analyses/[id]
+├ ƒ /api/saju/analyze
+├ ƒ /api/saju/calculate
+├ ƒ /api/saju/chat
+├ ƒ /api/saju/friends
+├ ƒ /api/saju/recent
+├ ƒ /api/user/profile
+├ ○ /auth/signin
+├ ƒ /category/[id]
+├ ○ /coupons
+├ ○ /dashboard
+├ ○ /feed
+├ ○ /hype
+├ ○ /main
+├ ○ /match
+├ ○ /menu
+├ ƒ /opengraph-image
+├ ○ /privacy
+├ ƒ /products/[id]
+├ ○ /profile
+├ ○ /ranking
+├ ƒ /ranking/[id]
+├ ○ /reports
+├ ƒ /result/[sessionId]
+├ ○ /robots.txt
+├ ƒ /saju/analyze/[sessionId]
+├ ○ /saju/new
+├ ƒ /saju/result/[sessionId]
+├ ○ /settings
+├ ƒ /share/saju/[id]
+├ ○ /sitemap.xml
+├ ○ /support
+└ ○ /terms
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

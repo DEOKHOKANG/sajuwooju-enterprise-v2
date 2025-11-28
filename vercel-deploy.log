@@ -1,0 +1,18 @@
+Vercel CLI 48.10.4
+Retrieving project…
+Deploying kevinglecs-projects/sajuwooju-enterprise
+Uploading [--------------------] (0.0B/12MB)
+Uploading [=====---------------] (3.0MB/12MB)
+Uploading [==========----------] (6.0MB/12MB)
+Uploading [===============-----] (9.0MB/12MB)
+Uploading [====================] (12.0MB/12MB)
+Inspect: https://vercel.com/kevinglecs-projects/sajuwooju-enterprise/GzBYHTuUxTfF4hahcnDjNGjhNumk [5s]
+Production: https://sajuwooju-enterprise-geek22doy-kevinglecs-projects.vercel.app [5s]
+https://sajuwooju-enterprise-geek22doy-kevinglecs-projects.vercel.appQueued
+Building
+[2K[1A[2K[GProduction: https://sajuwooju-enterprise-geek22doy-kevinglecs-projects.vercel.app [2m]
+Completing
+
+Common next commands:
+- `vercel inspect sajuwooju-enterprise-geek22doy-kevinglecs-projects.vercel.app --logs`
+- `vercel redeploy sajuwooju-enterprise-geek22doy-kevinglecs-projects.vercel.app`

@@ -1,0 +1,18 @@
+/* Pretendard Variable Font */
+@font-face {
+  font-family: 'Pretendard Variable';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 45 920;
+  src: url('/fonts/PretendardVariable.woff2') format('woff2-variations');
+}
+
+/* OnGlyph Saehayan Font */
+/* Note: This font needs to be sourced from the original site or purchased */
+@font-face {
+  font-family: 'OnGlyph Saehayan Font';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url('/fonts/OnGlyphSaehayan.woff2') format('woff2');
+}

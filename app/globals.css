@@ -1,0 +1,790 @@
+/**
+ * 사주우주 (SajuWooju) Design System
+ * Cosmic-themed color system and design tokens
+ * 우주의 법칙으로 읽는 나의 운명
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* ============================================
+     Color System - Cosmic Theme
+     ============================================ */
+
+  :root {
+    /* === 우주 배경 색상 (Deep Space) === */
+    --space-black: #0A0E27;        /* 깊은 우주 검정 */
+    --space-dark: #1A1F3A;         /* 어두운 우주 */
+    --space-navy: #2D3561;         /* 우주 네이비 */
+    --space-midnight: #151937;     /* 미드나잇 우주 */
+    --space-deep: #0D1226;         /* 심해 우주 */
+
+    /* === 별빛 & 강조색 (Stars & Accents) === */
+    --star-gold: #FFD700;          /* 별빛 골드 */
+    --star-silver: #E8E8E8;        /* 은빛 별 */
+    --star-white: #FFFFFF;         /* 밝은 별 */
+    --cosmic-purple: #7B68EE;      /* 우주 보라 */
+    --nebula-pink: #FF6EC7;        /* 성운 핑크 */
+    --nebula-blue: #4ECBFF;        /* 성운 블루 */
+    --aurora-green: #00FFB3;       /* 오로라 그린 */
+    --comet-cyan: #00D9FF;         /* 혜성 시안 */
+
+    /* === 행성 색상 (음양오행 매핑) === */
+    /* 水 (Water) */
+    --planet-mercury: #B8C5D6;     /* 수성 - 은회색 */
+    --planet-uranus: #4FD0E7;      /* 천왕성 - 청록색 */
+    --planet-neptune: #4169E1;     /* 해왕성 - 진한 파랑 */
+
+    /* 金 (Metal) */
+    --planet-venus: #FFD700;       /* 금성 - 황금색 */
+
+    /* 土 (Earth) */
+    --planet-earth: #4169E1;       /* 지구 - 파랑 */
+    --planet-saturn: #DAA520;      /* 토성 - 황갈색 */
+    --planet-pluto: #8B7355;       /* 명왕성 - 갈색 */
+
+    /* 火 (Fire) */
+    --planet-mars: #DC143C;        /* 화성 - 붉은색 */
+
+    /* 木 (Wood) */
+    --planet-jupiter: #FF8C00;     /* 목성 - 주황색 */
+
+    /* 태양 */
+    --sun-yellow: #FDB813;         /* 태양 노란색 */
+    --sun-orange: #FF6B35;         /* 태양 주황색 */
+    --sun-core: #FFE66D;           /* 태양 중심 */
+
+    /* === 그라디언트 프리셋 === */
+    --gradient-space: linear-gradient(180deg,
+      var(--space-black) 0%,
+      var(--space-midnight) 50%,
+      var(--space-navy) 100%);
+
+    --gradient-nebula: linear-gradient(135deg,
+      var(--nebula-pink) 0%,
+      var(--cosmic-purple) 50%,
+      var(--nebula-blue) 100%);
+
+    --gradient-aurora: linear-gradient(90deg,
+      var(--aurora-green) 0%,
+      var(--comet-cyan) 50%,
+      var(--nebula-blue) 100%);
+
+    --gradient-sun: radial-gradient(circle,
+      var(--sun-core) 0%,
+      var(--sun-yellow) 40%,
+      var(--sun-orange) 100%);
+
+    --gradient-planet-glow: radial-gradient(circle,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(255, 255, 255, 0) 70%);
+
+    /* === 텍스트 색상 === */
+    --text-primary: #FFFFFF;       /* 기본 텍스트 */
+    --text-secondary: #B8C5D6;     /* 보조 텍스트 */
+    --text-tertiary: #7A8499;      /* 3차 텍스트 */
+    --text-disabled: #4A5568;      /* 비활성 텍스트 */
+    --text-gold: var(--star-gold); /* 강조 골드 */
+    --text-purple: var(--cosmic-purple); /* 강조 보라 */
+
+    /* === UI 색상 === */
+    --ui-border: rgba(255, 255, 255, 0.1);      /* 테두리 */
+    --ui-border-hover: rgba(255, 255, 255, 0.2); /* 테두리 호버 */
+    --ui-divider: rgba(255, 255, 255, 0.06);    /* 구분선 */
+    --ui-overlay: rgba(10, 14, 39, 0.95);       /* 오버레이 */
+    --ui-glass: rgba(255, 255, 255, 0.05);      /* 글래스모피즘 */
+    --ui-glass-hover: rgba(255, 255, 255, 0.08); /* 글래스 호버 */
+
+    /* === 상태 색상 === */
+    --status-success: #00FFB3;     /* 성공 */
+    --status-warning: #FFD700;     /* 경고 */
+    --status-error: #FF4757;       /* 에러 */
+    --status-info: #4ECBFF;        /* 정보 */
+
+    /* === 음영 & 광택 === */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.6);
+    --shadow-glow: 0 0 24px rgba(123, 104, 238, 0.5);
+    --shadow-star: 0 0 12px rgba(255, 215, 0, 0.6);
+
+    /* === Z-index 레이어 === */
+    --z-background: -1;
+    --z-content: 1;
+    --z-overlay: 10;
+    --z-modal: 100;
+    --z-toast: 1000;
+    --z-tooltip: 10000;
+  }
+}
+
+@layer components {
+  /* ============================================
+     Animation Keyframes
+     ============================================ */
+
+  /* 별 반짝임 */
+  @keyframes twinkle {
+    0%, 100% {
+      opacity: 0.3;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+  }
+
+  /* 행성 공전 */
+  @keyframes orbit {
+    from {
+      transform: rotate(0deg) translateX(var(--orbit-radius, 200px)) rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg) translateX(var(--orbit-radius, 200px)) rotate(-360deg);
+    }
+  }
+
+  /* 행성 공전 (간단 버전 - 로딩 페이지용) */
+  @keyframes orbit-simple {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* 성운 펄스 */
+  @keyframes nebula-pulse {
+    0%, 100% {
+      filter: brightness(1) blur(0px);
+      opacity: 0.6;
+    }
+    50% {
+      filter: brightness(1.3) blur(4px);
+      opacity: 0.9;
+    }
+  }
+
+  /* 별똥별 */
+  @keyframes shooting-star {
+    0% {
+      transform: translateX(0) translateY(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(300px) translateY(300px);
+      opacity: 0;
+    }
+  }
+
+  /* 우주 먼지 떠다님 */
+  @keyframes float-dust {
+    0%, 100% {
+      transform: translate(0, 0);
+    }
+    25% {
+      transform: translate(10px, -10px);
+    }
+    50% {
+      transform: translate(-5px, -20px);
+    }
+    75% {
+      transform: translate(-10px, -10px);
+    }
+  }
+
+  /* 태양 회전 */
+  @keyframes sun-rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* 행성 자전 */
+  @keyframes planet-spin {
+    from {
+      transform: rotateY(0deg);
+    }
+    to {
+      transform: rotateY(360deg);
+    }
+  }
+
+  /* 글로우 펄스 */
+  @keyframes glow-pulse {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(123, 104, 238, 0.5);
+    }
+    50% {
+      box-shadow: 0 0 40px rgba(123, 104, 238, 0.8);
+    }
+  }
+
+  /* 오로라 흐름 */
+  @keyframes aurora-flow {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  /* 페이드 인 */
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* 슬라이드 업 */
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* 스케일 인 */
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  /* 쉬머 효과 (프로그레스 바) */
+  @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  /* Slide in from right (Toast) */
+  @keyframes slide-in-right {
+    from {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* ============================================
+     Utility Classes
+     ============================================ */
+
+  /* 우주 배경 */
+  .bg-space {
+    background: var(--gradient-space);
+  }
+
+  .bg-space-static {
+    background-color: var(--space-black);
+  }
+
+  /* 글래스모피즘 */
+  .glass {
+    background: var(--ui-glass);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--ui-border);
+  }
+
+  .glass-hover:hover {
+    background: var(--ui-glass-hover);
+    border-color: var(--ui-border-hover);
+  }
+
+  /* 글로우 효과 */
+  .glow-gold {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+  }
+
+  .glow-purple {
+    box-shadow: 0 0 20px rgba(123, 104, 238, 0.4);
+  }
+
+  .glow-blue {
+    box-shadow: 0 0 20px rgba(78, 203, 255, 0.4);
+  }
+
+  /* 텍스트 그라디언트 */
+  .text-gradient-gold {
+    background: linear-gradient(135deg, var(--star-gold) 0%, var(--sun-orange) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-nebula {
+    background: var(--gradient-nebula);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* 애니메이션 클래스 */
+  .animate-twinkle {
+    animation: twinkle 2s ease-in-out infinite;
+  }
+
+  .animate-orbit {
+    animation: orbit var(--orbit-duration, 20s) linear infinite;
+  }
+
+  .animate-nebula-pulse {
+    animation: nebula-pulse 4s ease-in-out infinite;
+  }
+
+  .animate-shooting-star {
+    animation: shooting-star 2s ease-out forwards;
+  }
+
+  .animate-float-dust {
+    animation: float-dust 8s ease-in-out infinite;
+  }
+
+  .animate-glow-pulse {
+    animation: glow-pulse 2s ease-in-out infinite;
+  }
+
+  .animate-aurora-flow {
+    animation: aurora-flow 6s ease infinite;
+    background-size: 200% 200%;
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.6s ease-out;
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.6s ease-out;
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.4s ease-out;
+  }
+
+  .animate-shimmer {
+    animation: shimmer 2s infinite;
+  }
+
+  .animate-slide-in-right {
+    animation: slide-in-right 0.3s ease-out;
+  }
+
+  /* GPU 가속 최적화 */
+  .gpu-accelerated {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  /* ============================================
+     Stats Section - Stars Background
+     ============================================ */
+
+  /* 별 배경 (5개 레이어) */
+  .stars-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: transparent;
+    background-image:
+      radial-gradient(circle, white 1px, transparent 1px),
+      radial-gradient(circle, white 1px, transparent 1px),
+      radial-gradient(circle, rgba(255, 255, 255, 0.8) 1px, transparent 1px),
+      radial-gradient(circle, white 2px, transparent 2px),
+      radial-gradient(circle, rgba(255, 255, 255, 0.6) 1px, transparent 1px);
+    background-size:
+      200px 200px,
+      300px 300px,
+      250px 250px,
+      400px 400px,
+      150px 150px;
+    background-position:
+      0 0,
+      40px 60px,
+      130px 270px,
+      70px 100px,
+      250px 50px;
+    z-index: 0;
+  }
+
+  /* 별 반짝임 애니메이션 레이어 */
+  .stars-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image:
+      radial-gradient(circle, white 1px, transparent 1px),
+      radial-gradient(circle, rgba(255, 255, 255, 0.7) 1px, transparent 1px),
+      radial-gradient(circle, white 1px, transparent 1px);
+    background-size:
+      180px 180px,
+      220px 220px,
+      280px 280px;
+    background-position:
+      100px 30px,
+      180px 150px,
+      50px 200px;
+    animation: twinkle 3s ease-in-out infinite;
+  }
+
+  /* 통계 섹션 그라디언트 오버레이 */
+  .stats-gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg,
+      rgba(0, 0, 0, 0.8) 0%,
+      rgba(10, 10, 26, 0.6) 20%,
+      rgba(15, 5, 32, 0.4) 40%,
+      rgba(26, 10, 46, 0.4) 60%,
+      rgba(15, 5, 32, 0.6) 80%,
+      rgba(0, 0, 0, 0.8) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* 떠다니는 오브 (배경 장식) */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+    animation: float 20s infinite ease-in-out;
+    pointer-events: none;
+  }
+
+  .orb-1 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, var(--nebula-pink), transparent);
+    top: 10%;
+    left: 10%;
+    animation-delay: 0s;
+  }
+
+  .orb-2 {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, var(--cosmic-purple), transparent);
+    top: 50%;
+    right: 15%;
+    animation-delay: -7s;
+  }
+
+  .orb-3 {
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, var(--nebula-blue), transparent);
+    bottom: 15%;
+    left: 20%;
+    animation-delay: -14s;
+  }
+
+  /* 오브 떠다님 애니메이션 */
+  @keyframes float {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    25% {
+      transform: translate(30px, -30px) scale(1.05);
+    }
+    50% {
+      transform: translate(-20px, -50px) scale(0.95);
+    }
+    75% {
+      transform: translate(-30px, -20px) scale(1.02);
+    }
+  }
+
+  /* 통계 카드 호버 효과 */
+  .stat-card {
+    transition: transform 300ms ease, box-shadow 300ms ease;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  /* 통계 카드 글로우 효과 */
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 18px;
+    padding: 2px;
+    background: linear-gradient(135deg,
+      var(--gradient-from, var(--star-gold)),
+      var(--gradient-to, var(--sun-orange)));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 300ms ease;
+  }
+
+  .stat-card:hover::before {
+    opacity: 0.3;
+  }
+
+  /* ============================================
+     Glassmorphism Components
+     ============================================ */
+
+  /* 헤더 & 네비게이션 글래스모피즘 */
+  .glass-header {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-nav {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-button {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 200ms ease;
+  }
+
+  .glass-button:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  /* 세이프 에리어 (모바일 노치 대응) */
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .safe-left {
+    padding-left: env(safe-area-inset-left);
+  }
+
+  .safe-right {
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+@layer utilities {
+  /* 스페이싱 시스템 (8px 기반) */
+  .space-1 { margin: 8px; }
+  .space-2 { margin: 16px; }
+  .space-3 { margin: 24px; }
+  .space-4 { margin: 32px; }
+  .space-5 { margin: 40px; }
+  .space-6 { margin: 48px; }
+  .space-8 { margin: 64px; }
+  .space-10 { margin: 80px; }
+
+  /* 반응형 숨김 */
+  .mobile-only {
+    @media (min-width: 768px) {
+      display: none;
+    }
+  }
+
+  .desktop-only {
+    @media (max-width: 767px) {
+      display: none;
+    }
+  }
+
+  /* ============================================
+     Glassmorphism Design System
+     일관된 글래스모피즘 효과를 위한 유틸리티 클래스
+     ============================================ */
+
+  /* Light Glassmorphism (밝은 배경용 - Main Page) */
+  .glass-light {
+    @apply backdrop-blur-2xl bg-white/70 border border-white/40;
+  }
+
+  .glass-light-hover {
+    @apply hover:bg-white/80 hover:border-white/60 hover:shadow-2xl;
+  }
+
+  /* Medium Glassmorphism (중간 투명도) */
+  .glass-medium {
+    @apply backdrop-blur-xl bg-white/50 border border-white/30;
+  }
+
+  .glass-medium-hover {
+    @apply hover:bg-white/60 hover:border-white/50 hover:shadow-xl;
+  }
+
+  /* Strong Glassmorphism (강한 효과) */
+  .glass-strong {
+    @apply backdrop-blur-3xl bg-white/80 border border-white/60;
+  }
+
+  .glass-strong-hover {
+    @apply hover:bg-white/90 hover:border-white/80;
+  }
+
+  /* Dark Glassmorphism (어두운 배경용 - Landing Page) */
+  .glass-dark {
+    @apply backdrop-blur-xl bg-white/10 border border-white/20;
+  }
+
+  .glass-dark-hover {
+    @apply hover:bg-white/20 hover:border-white/30;
+  }
+
+  /* Glassmorphism Card (Full style with transitions) */
+  .glass-card {
+    @apply glass-light rounded-2xl shadow-lg transition-all duration-500;
+  }
+
+  .glass-card-hover {
+    @apply hover:-translate-y-2 glass-light-hover;
+  }
+
+  /* Glassmorphism Navigation (Header/Footer) */
+  .glass-nav {
+    @apply backdrop-blur-xl bg-white/80 border-white/30;
+  }
+
+  /* Glassmorphism Button */
+  .glass-button {
+    @apply backdrop-blur-md bg-white/20 border border-white/30 transition-all duration-300;
+  }
+
+  .glass-button-hover {
+    @apply hover:bg-white/30 hover:border-white/50 hover:scale-105;
+  }
+
+  /* Glassmorphism Badge/Tag */
+  .glass-badge {
+    @apply backdrop-blur-sm bg-white/70 rounded-full px-3 py-1;
+  }
+
+  /* Glassmorphism Overlay */
+  .glass-overlay {
+    @apply backdrop-blur-sm bg-white/40;
+  }
+
+  /* Combined Utility Classes */
+  .glass-card-full {
+    @apply glass-card glass-card-hover;
+  }
+
+  .glass-button-full {
+    @apply glass-button glass-button-hover;
+  }
+
+  /* ============================================
+     Production-Grade Page Animations (상용화급)
+     부드러운 페이지 전환 애니메이션
+     ============================================ */
+
+  /* Fade In Down (Header용) */
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-down {
+    animation: fadeInDown 0.8s ease-out;
+  }
+
+  /* Fade In Up (Content용) */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out;
+  }
+
+  /* Fade In (일반용) */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  /* Scale In (강조용) */
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.5s ease-out;
+  }
+}

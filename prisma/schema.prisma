@@ -1,0 +1,875 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  // For Vercel Postgres, use directUrl for migrations
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+// ============================================
+// AUTHENTICATION MODELS (NextAuth.js v5)
+// ============================================
+
+// User Model - NextAuth.js Compatible
+model User {
+  id            String    @id @default(uuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+
+  // Legacy fields (keep for backward compatibility)
+  kakaoId       String?   @unique
+  profileImage  String?
+
+  // User metadata
+  role          String    @default("user") // 'user' | 'premium' | 'admin'
+  level         Int       @default(1) // User level (1-100, gamification)
+  isActive      Boolean   @default(true)
+
+  // Relations
+  accounts      Account[]
+  sessions      Session[]
+  consultations Consultation[]
+  favorites     Favorite[]
+  sajuAnalyses  SajuAnalysis[]
+  notifications Notification[]
+  reviews       Review[]
+  purchases     Purchase[]
+
+  // Follow Relations (단방향)
+  following     Follow[]  @relation("UserFollowing")
+  followers     Follow[]  @relation("UserFollowers")
+
+  // Friend Relations (양방향)
+  friendRequestsSent     Friend[] @relation("FriendRequests")
+  friendRequestsReceived Friend[] @relation("FriendRequestsReceived")
+
+  // Social Stats (캐시용 - 성능 최적화)
+  followerCount  Int @default(0)
+  followingCount Int @default(0)
+  friendCount    Int @default(0)
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  lastLoginAt   DateTime?
+
+  @@index([email])
+  @@index([kakaoId])
+  @@map("users")
+}
+
+// Account Model - NextAuth.js OAuth Accounts
+model Account {
+  id                String  @id @default(uuid())
+  userId            String
+  type              String  // 'oauth' | 'email' | 'credentials'
+  provider          String  // 'kakao' | 'google' | 'credentials'
+  providerAccountId String  // OAuth provider's user id
+
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+  @@map("accounts")
+}
+
+// Session Model - NextAuth.js Sessions
+model Session {
+  id           String   @id @default(uuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([userId])
+  @@index([sessionToken])
+  @@map("sessions")
+}
+
+// Verification Token Model - Email verification
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+// Consultation Model (Core - Phase 8)
+model Consultation {
+  id          String   @id @default(uuid())
+  userId      String?  // Optional - anonymous consultations allowed
+  user        User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  sessionId   String   @unique // UUID for sharing/accessing results
+  productId   String?  // Which product/service was used
+
+  // Input data
+  name        String
+  birthDate   DateTime
+  birthTime   Int      // 0-23
+  gender      String   // 'male' | 'female'
+  isLunar     Boolean  @default(false)
+
+  // Calculated saju data (stored as JSON)
+  sajuData    String?  @db.Text // JSON stringified SajuResult
+
+  // Metadata
+  status      String   @default("pending") // 'pending' | 'completed' | 'failed'
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId])
+  @@index([sessionId])
+  @@index([createdAt])
+  @@index([status])
+  @@map("consultations")
+}
+
+// ============================================
+// PRODUCT & CATEGORY MODELS (Phase 6)
+// ============================================
+
+// Category Model - 제품 카테고리
+model Category {
+  id          String   @id @default(uuid())
+
+  // 기본 정보
+  name        String   // '이벤트', '궁합', '솔로/연애운' 등
+  slug        String   @unique // 'event', 'compatibility', 'love' 등 (URL-friendly)
+  description String?  @db.Text
+
+  // 시각적 요소
+  icon        String?  // Emoji or icon name
+  color       String?  // Primary color (HEX)
+  gradient    String?  // Tailwind gradient class
+
+  // 메타데이터
+  order       Int      @default(0) // 정렬 순서
+  isActive    Boolean  @default(true)
+
+  // Relations
+  products    ProductCategory[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([slug])
+  @@index([isActive])
+  @@index([order])
+  @@map("categories")
+}
+
+// Product Model - 제품/서비스 (Enhanced for Phase 6)
+model Product {
+  id          String     @id @default(uuid())
+
+  // 기본 정보
+  title       String     // 제품 제목
+  slug        String?    @unique // URL-friendly identifier
+  subtitle    String?    // 부제목/설명
+  shortDescription String? @db.Text // 짧은 설명
+  fullDescription  String? @db.Text // 상세 설명
+  features    String[]   @default([]) // 기능 목록
+
+  // 가격 정보
+  price       Int?       // 기본 가격 (원)
+  discountPrice Int?     // 할인 가격
+  discount    Int        @default(0) // 할인율 (0-100%)
+
+  // 통계
+  rating      Float      @default(0.0) // 평점 (0.0-5.0)
+  reviewCount Int        @default(0)   // 리뷰 수
+  views       Int        @default(0)   // 조회수
+  purchaseCount Int      @default(0)   // 구매수
+
+  // 이미지
+  imageUrl    String     // 메인 이미지
+  thumbnailUrl String?   // 썸네일 (최적화된 이미지)
+  images      String[]   // 추가 이미지 배열
+
+  // 메타데이터
+  isActive    Boolean    @default(true)
+  isFeatured  Boolean    @default(false) // 추천 제품 여부
+  isPremium   Boolean    @default(false) // 프리미엄 제품 여부
+  order       Int        @default(0)     // 정렬 순서
+
+  // SEO
+  seoTitle       String?
+  seoDescription String?  @db.Text
+  seoKeywords    String[] // 검색 키워드 배열
+
+  // Relations
+  categories  ProductCategory[]
+  favorites   Favorite[]
+  reviews     Review[]
+
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  publishedAt DateTime?
+
+  @@index([slug])
+  @@index([isActive])
+  @@index([isFeatured])
+  @@index([isPremium])
+  @@index([price])
+  @@index([rating])
+  @@index([views])
+  @@index([purchaseCount])
+  @@index([createdAt])
+  @@map("products")
+}
+
+// ProductCategory Model - 제품-카테고리 다대다 관계
+model ProductCategory {
+  id         String   @id @default(uuid())
+
+  productId  String
+  categoryId String
+
+  // Relations
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  // 메타데이터
+  order      Int      @default(0) // 카테고리 내 제품 순서
+  createdAt  DateTime @default(now())
+
+  @@unique([productId, categoryId]) // 중복 방지
+  @@index([productId])
+  @@index([categoryId])
+  @@index([categoryId, order]) // 카테고리 내 정렬
+  @@map("product_categories")
+}
+
+// Favorite Model (for Phase 11)
+model Favorite {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, productId])
+  @@index([userId])
+  @@index([productId])
+  @@map("favorites")
+}
+
+// Review Model - 제품/콘텐츠 리뷰
+model Review {
+  id          String   @id @default(uuid())
+
+  // Relations
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId   String?  // 제품 리뷰 (선택)
+  product     Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
+  contentId   String?  // 사주 콘텐츠 리뷰 (선택)
+  content     SajuContent? @relation(fields: [contentId], references: [id], onDelete: Cascade)
+
+  // 리뷰 내용
+  rating      Int      // 1-5 별점
+  title       String?  // 리뷰 제목 (선택)
+  comment     String   @db.Text // 리뷰 내용
+
+  // 메타데이터
+  isVerified  Boolean  @default(false) // 구매 인증 리뷰 여부
+  isHelpful   Int      @default(0)     // 도움이 됐어요 수
+  reportCount Int      @default(0)     // 신고 수
+
+  // 상태
+  status      String   @default("active") // 'active', 'hidden', 'deleted'
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // 제품 또는 콘텐츠 중 하나는 필수
+  @@index([userId])
+  @@index([productId])
+  @@index([contentId])
+  @@index([rating])
+  @@index([status])
+  @@index([createdAt])
+  @@index([productId, status, createdAt])
+  @@index([contentId, status, createdAt])
+  @@map("reviews")
+}
+
+// Payment Model (Phase 8.10 - Toss Payments)
+model Payment {
+  id                 String    @id @default(uuid())
+  orderId            String    @unique // Unique order identifier
+  paymentKey         String?   @unique // Toss payment key (after approval)
+
+  // Relations
+  userId             String?
+  sessionId          String?   // Link to consultation session
+  consultationId     String?   // Link to consultation
+  productId          String    // Which product was purchased
+
+  // Payment info
+  amount             Int       // Payment amount (in KRW)
+  status             String    @default("pending") // 'pending' | 'ready' | 'in_progress' | 'done' | 'canceled' | 'failed'
+  orderName          String    // Order description
+
+  // Customer info
+  customerName       String
+  customerEmail      String?
+  customerMobilePhone String?
+
+  // Payment details (after approval)
+  method             String?   // Payment method used
+  approvedAt         DateTime?
+  canceledAt         DateTime?
+
+  // Failure info
+  failureCode        String?
+  failureMessage     String?
+
+  // Metadata (JSON)
+  metadata           String?   @db.Text
+
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  // Relations
+  purchases      Purchase[]
+
+  @@index([orderId])
+  @@index([paymentKey])
+  @@index([userId])
+  @@index([sessionId])
+  @@index([consultationId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("payments")
+}
+
+// Purchase Model - 구매 내역 및 콘텐츠 접근 권한
+model Purchase {
+  id             String    @id @default(uuid())
+
+  // Relations
+  userId         String
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  paymentId      String
+  payment        Payment   @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+
+  // 구매한 콘텐츠/제품 정보
+  productId      String?   // 제품 ID
+  contentId      String?   // 사주 콘텐츠 ID
+  contentSlug    String?   // 콘텐츠 slug (빠른 조회용)
+
+  // 접근 권한
+  accessGranted  DateTime  @default(now()) // 접근 권한 부여 시간
+  accessExpires  DateTime? // 접근 만료 시간 (null = 영구)
+  isActive       Boolean   @default(true)  // 활성화 여부
+
+  // 메타데이터
+  metadata       String?   @db.Text
+
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@unique([userId, paymentId])
+  @@index([userId])
+  @@index([paymentId])
+  @@index([productId])
+  @@index([contentId])
+  @@index([contentSlug])
+  @@index([userId, isActive])
+  @@index([accessExpires])
+  @@map("purchases")
+}
+
+// ============================================
+// CMS MODELS (상용화급 전환)
+// ============================================
+
+// Planet Model - 행성 데이터 (하드코딩 제거)
+model Planet {
+  id              String   @id @default(uuid())
+  slug            String   @unique // 'mercury', 'venus', 'earth', etc.
+
+  // 기본 정보
+  koreanName      String   // '수성', '금성', etc.
+  englishName     String
+  emoji           String   // '☿', '♀', '⊕', etc.
+
+  // 사주 요소
+  element         String   // '水', '金', '木', '火', '土' (오행)
+  yinYang         String   // '음', '양'
+
+  // 시각적 속성 (3D & UI)
+  color           String   // HEX color
+  gradient        String   // Tailwind gradient class
+  orbitRadius     Float    // Three.js orbit radius
+  radius          Float    // Planet radius
+  rotationSpeed   Float    @default(0.01)
+  hasAtmosphere   Boolean  @default(false)
+  hasRings        Boolean  @default(false)
+
+  // 텍스처 URL
+  textureUrl      String?
+  normalMapUrl    String?
+  cloudMapUrl     String?
+
+  // 콘텐츠
+  description     String   @db.Text  // 행성 설명
+  mythology       String   @db.Text  // 신화 및 유래
+  sajuMeaning     String   @db.Text  // 사주에서의 의미
+  fortuneKeywords String[] // 운세 키워드 배열
+
+  // 메타데이터
+  publishedAt     DateTime?
+  isPublished     Boolean  @default(false)
+  order           Int      @default(0)
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([slug])
+  @@index([isPublished])
+  @@index([order])
+  @@map("planets")
+}
+
+// Fortune Category Model - 운세 카테고리
+model FortuneCategory {
+  id          String   @id @default(uuid())
+  slug        String   @unique // 'love', 'career', 'health', 'money', etc.
+
+  name        String   // '연애운', '직업운', etc.
+  icon        String   // Emoji or icon name
+  color       String   // Primary color
+  gradient    String   // Tailwind gradient
+
+  description String   @db.Text
+  keywords    String[] // 키워드 배열
+
+  // 메타데이터
+  publishedAt DateTime?
+  isPublished Boolean  @default(false)
+  order       Int      @default(0)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([slug])
+  @@index([isPublished])
+  @@map("fortune_categories")
+}
+
+// Admin Model - 관리자
+model Admin {
+  id            String   @id @default(uuid())
+
+  email         String   @unique
+  passwordHash  String
+
+  name          String
+  role          String   @default("editor") // 'super_admin', 'editor', 'viewer'
+
+  isActive      Boolean  @default(true)
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  lastLoginAt   DateTime?
+
+  @@index([email])
+  @@map("admins")
+}
+
+// Event Banner Model - 이벤트 배너
+model EventBanner {
+  id          String   @id @default(uuid())
+
+  title       String
+  description String   @db.Text
+
+  imageUrl    String
+  linkUrl     String?
+
+  // 기간
+  startDate   DateTime
+  endDate     DateTime
+
+  // 메타데이터
+  isPublished Boolean  @default(false)
+  order       Int      @default(0)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([isPublished])
+  @@index([startDate, endDate])
+  @@map("event_banners")
+}
+
+// Testimonial Model - 사용자 후기
+model Testimonial {
+  id          String   @id @default(uuid())
+
+  avatar      String   // Emoji
+  name        String
+  age         String   // '20대 초반', etc.
+
+  rating      Int      // 1-5
+  content     String   @db.Text
+
+  // 메타데이터
+  isPublished Boolean  @default(false)
+  order       Int      @default(0)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([isPublished])
+  @@map("testimonials")
+}
+
+// ============================================
+// SOCIAL MODELS (팔로우 시스템)
+// ============================================
+
+// Follow Model - 팔로우 관계
+model Follow {
+  id           String   @id @default(uuid())
+
+  // Follower -> Following 관계
+  followerId   String   // 팔로우를 하는 사람 (나)
+  followingId  String   // 팔로우를 받는 사람 (상대방)
+
+  // Relations
+  follower     User     @relation("UserFollowing", fields: [followerId], references: [id], onDelete: Cascade)
+  following    User     @relation("UserFollowers", fields: [followingId], references: [id], onDelete: Cascade)
+
+  // Metadata
+  createdAt    DateTime @default(now())
+
+  // 중복 팔로우 방지 (한 사용자가 같은 사람을 여러 번 팔로우 불가)
+  @@unique([followerId, followingId])
+
+  // 성능 최적화 인덱스
+  @@index([followerId])        // 내가 팔로우한 사람 조회
+  @@index([followingId])       // 나를 팔로우한 사람 조회
+  @@index([createdAt])         // 최근 팔로우 조회
+  @@index([followerId, createdAt]) // 복합 인덱스
+  @@index([followingId, createdAt]) // 복합 인덱스
+
+  @@map("follows")
+}
+
+// Friend Model - 친구 관계 (양방향 승인 필요)
+model Friend {
+  id          String   @id @default(uuid())
+
+  // 친구 요청자 -> 수신자
+  requesterId String   // 친구 요청을 보낸 사람
+  addresseeId String   // 친구 요청을 받은 사람
+
+  // Relations
+  requester   User     @relation("FriendRequests", fields: [requesterId], references: [id], onDelete: Cascade)
+  addressee   User     @relation("FriendRequestsReceived", fields: [addresseeId], references: [id], onDelete: Cascade)
+
+  // Status: pending (대기), accepted (수락), rejected (거절)
+  status      String   @default("pending") // 'pending' | 'accepted' | 'rejected'
+
+  // Metadata
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // 중복 요청 방지 (같은 사용자 간 중복 친구 관계 불가)
+  @@unique([requesterId, addresseeId])
+
+  // 성능 최적화 인덱스
+  @@index([requesterId])                      // 내가 보낸 요청 조회
+  @@index([addresseeId])                      // 내가 받은 요청 조회
+  @@index([requesterId, status])              // 내가 보낸 요청 상태별 조회
+  @@index([addresseeId, status])              // 내가 받은 요청 상태별 조회
+  @@index([requesterId, addresseeId, status]) // 친구 관계 확인 (양방향)
+  @@index([status, createdAt])                // 최근 요청 조회
+
+  @@map("friends")
+}
+
+// ============================================
+// SAJU ANALYSIS MODELS
+// ============================================
+
+// SajuAnalysis Model - 사주 분석 결과
+model SajuAnalysis {
+  id          String   @id @default(uuid())
+  userId      String
+
+  // 분석 정보
+  category    String   // 연애운, 재물운, 직업운, 궁합, 연운, 종합분석
+  title       String?  // 분석 제목 (사용자 지정 가능)
+
+  // 생년월일 정보
+  birthDate   DateTime // 생년월일
+  birthTime   String?  // 출생 시간 (선택)
+  isLunar     Boolean  @default(false) // 음력 여부
+  gender      String?  // 성별 (optional)
+
+  // 사주 기본 정보 (천간지지)
+  yearPillar  String?  // 년주 (갑자, 을축 등)
+  monthPillar String?  // 월주
+  dayPillar   String?  // 일주
+  hourPillar  String?  // 시주
+
+  // 분석 결과 (JSON)
+  result      Json     // AI 분석 결과, 해석 등 (flexible schema)
+
+  // 메타데이터
+  visibility  String   @default("private") // 'private', 'friends', 'public'
+  viewCount   Int      @default(0)         // 조회수
+  likeCount   Int      @default(0)         // 좋아요 수
+  shareCount  Int      @default(0)         // 공유 수
+
+  // 프리미엄 여부
+  isPremium   Boolean  @default(false)     // 프리미엄 분석 여부
+
+  // 타임스탬프
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // 성능 최적화 인덱스
+  @@index([userId])                    // 사용자별 분석 조회
+  @@index([userId, createdAt])         // 사용자 최근 분석
+  @@index([category])                  // 카테고리별 조회
+  @@index([visibility])                // 공개 범위별 조회
+  @@index([visibility, createdAt])     // 공개 분석 최신순
+  @@index([visibility, likeCount])     // 공개 분석 인기순
+  @@index([createdAt])                 // 전체 최신 분석
+
+  @@map("saju_analyses")
+}
+
+// ============================================
+// SAJU CONTENT TEMPLATE SYSTEM (Phase 1.6)
+// ============================================
+
+// SajuCategory Model - 사주 카테고리 (궁합, 연애운, 취업운 등)
+model SajuCategory {
+  id          String   @id @default(uuid())
+  name        String   // "궁합", "연애운", "취업운", "결혼운", "신년운세", "월간운세" 등
+  slug        String   @unique // "compatibility", "love", "career", "marriage", "new-year", "monthly"
+
+  // 시각적 요소 (colors.ts 기반)
+  icon        String?  // Lucide icon name (Heart, Briefcase, Star, Users, etc.)
+  color       String   // elementBadgeStyles key or 'wood', 'fire', 'earth', 'metal', 'water', 'primary'
+  gradient    String?  // Custom gradient class (optional)
+
+  // 설명
+  description String?  @db.Text
+  shortDesc   String?  // 짧은 설명 (카드용)
+
+  // 메타데이터
+  order       Int      @default(0)
+  isActive    Boolean  @default(true)
+
+  // Relations
+  templates   SajuTemplate[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([slug])
+  @@index([isActive])
+  @@index([order])
+  @@map("saju_categories")
+}
+
+// SajuTemplate Model - 사주 템플릿 정의
+model SajuTemplate {
+  id          String   @id @default(uuid())
+  categoryId  String
+
+  // 기본 정보
+  name        String   // "기본 궁합 분석", "심화 연애운", "2025 신년운세"
+  slug        String   @unique // URL-friendly identifier
+  description String?  @db.Text
+
+  // 템플릿 타입
+  type        String   // 'single' | 'multi-step' | 'comparison' | 'timeline'
+
+  // 레이아웃 설정 (JSON)
+  layout      Json     // { sections: [...], theme: {...}, customCSS: ... }
+
+  // 미리보기
+  thumbnail   String?  // 템플릿 미리보기 이미지
+
+  // 메타데이터
+  isActive    Boolean  @default(true)
+  version     Int      @default(1)
+
+  // Relations
+  category    SajuCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  fields      TemplateField[]
+  contents    SajuContent[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([categoryId])
+  @@index([slug])
+  @@index([isActive])
+  @@index([type])
+  @@map("saju_templates")
+}
+
+// TemplateField Model - 템플릿 필드 정의 (동적 폼)
+model TemplateField {
+  id          String   @id @default(uuid())
+  templateId  String
+
+  // 필드 정보
+  name        String   // "title", "description", "element", "compatibility_score", "insight"
+  type        String   // 'text', 'richtext', 'number', 'element', 'date', 'image', 'select', 'multiselect'
+  label       String   // "제목", "설명", "오행", "궁합도", "인사이트"
+  placeholder String?  // Placeholder text
+  helpText    String?  // Help text
+
+  // 검증 규칙 (JSON)
+  validation  Json?    // { required: true, minLength: 10, maxLength: 100, pattern: "regex" }
+
+  // 옵션 (select, multiselect 용)
+  options     Json?    // [{ value: "wood", label: "木" }, ...]
+
+  // 기본값
+  defaultValue String?
+
+  // 순서
+  order       Int      @default(0)
+
+  // Relations
+  template    SajuTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([templateId])
+  @@index([templateId, order])
+  @@map("template_fields")
+}
+
+// SajuContent Model - 실제 사주 컨텐츠
+model SajuContent {
+  id          String   @id @default(uuid())
+  templateId  String
+
+  // 기본 정보
+  title       String
+  slug        String   @unique // URL-friendly identifier
+  excerpt     String?  @db.Text // 짧은 요약
+
+  // 컨텐츠 데이터 (동적 필드 기반)
+  data        Json     // { title: "...", description: "...", element: "木", score: 85, ... }
+
+  // SEO
+  seoTitle       String?
+  seoDescription String?  @db.Text
+  seoKeywords    String[] // 검색 키워드 배열
+
+  // 이미지
+  featuredImage  String?  // 대표 이미지
+  ogImage        String?  // Open Graph 이미지
+
+  // 상태
+  status      String   @default("draft") // 'draft', 'published', 'archived'
+  publishedAt DateTime?
+
+  // 통계
+  viewCount   Int      @default(0)
+  shareCount  Int      @default(0)
+
+  // 작성자 (Admin)
+  createdBy   String?  // Admin user ID or email
+
+  // Relations
+  template    SajuTemplate @relation(fields: [templateId], references: [id], onDelete: Restrict)
+  reviews     Review[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([templateId])
+  @@index([slug])
+  @@index([status])
+  @@index([status, publishedAt])
+  @@index([createdAt])
+  @@index([viewCount])
+  @@map("saju_contents")
+}
+
+// ============================================
+// NOTIFICATION MODEL (Phase 3)
+// ============================================
+
+// Notification Model - 사용자 알림 시스템
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String   // 알림을 받을 사용자
+
+  // 알림 타입
+  type      String   // 'friend_request', 'friend_accept', 'follow', 'like', 'comment', 'share', 'mention'
+
+  // 알림 내용
+  title     String   // 알림 제목
+  message   String   // 알림 메시지
+
+  // 관련 데이터 (optional)
+  actorId   String?  // 행동을 한 사용자 ID (친구 요청 보낸 사람, 좋아요 누른 사람 등)
+  targetId  String?  // 대상 ID (사주 분석 ID, 댓글 ID 등)
+  actionUrl String?  // 클릭 시 이동할 URL
+
+  // 알림 상태
+  isRead    Boolean  @default(false) // 읽음 여부
+
+  // 타임스탬프
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // 성능 최적화 인덱스
+  @@index([userId])                    // 사용자별 알림 조회
+  @@index([userId, isRead])            // 읽지 않은 알림 조회
+  @@index([userId, createdAt])         // 사용자 최신 알림
+  @@index([type])                      // 타입별 알림
+  @@index([createdAt])                 // 전체 최신 알림
+
+  @@map("notifications")
+}
